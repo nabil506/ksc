@@ -1,0 +1,15 @@
+{
+    "name": "nabil/ksc-main",
+    "autoload": {
+    "psr-4": {
+        "app\\": "app/"
+    }
+},
+    "authors": [
+        {
+            "name": "Nabil Syah Ahnaf Bayhaqi",
+            "email": "balaikota789@gmail.com"
+        }
+    ],
+    "require": {}
+}
