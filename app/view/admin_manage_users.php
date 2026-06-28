@@ -3,8 +3,8 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 $nama = $_SESSION['nama_aktif'] ?? 'Admin KSC';
 $role = $_SESSION['role_aktif'] ?? 'admin';
 
-// Ambil status dari session (sesuai yang kita buat sebelumnya)
-$status_anggota = $_SESSION['status_anggota'] ?? $_SESSION['status_aktif'] ?? 'Aktif';
+// Ambil status dari session
+$status_anggota = $_SESSION['status_aktif'] ?? 'Aktif';
 
 $isAktif = (strtolower($status_anggota) === 'aktif');
 $badgeBg = $isAktif ? '#d1fae5' : '#fee2e2';
@@ -21,7 +21,6 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
     <style>
         .status-aktif { background-color: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; }
         .status-nonaktif { background-color: #fee2e2; color: #991b1b; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; }
-        .status-suspend { background-color: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; }
         .select-aksi { padding: 6px 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: 'Poppins', sans-serif; font-size: 13px; cursor: pointer; background-color: #fff; outline: none; }
         .select-aksi:focus { border-color: #0A4D8C; }
     </style>
@@ -32,21 +31,11 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
         <aside class="dashboard-sidebar">
             <div class="sidebar-user">
                 <div class="user-name"><?= htmlspecialchars($nama) ?></div>
-                
-                <!-- Layout Sidebar yang disamakan dengan halaman lain -->
                 <div class="user-role" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 8px;">
                     <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
                         <?= htmlspecialchars(strtoupper($role)) ?>
                     </span>
-                    
-                    <!-- Badge Status disembunyikan untuk Admin -->
-                    <?php if (strtolower($role) !== 'admin'): ?>
-                    <span style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
-                        <?= htmlspecialchars(strtoupper($status_anggota)) ?>
-                    </span>
-                    <?php endif; ?>
                 </div>
-
             </div>
             <div class="dashboard-brand">KSC Dashboard</div>
             
@@ -58,9 +47,7 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                 <a href="/riwayat" class="sidebar-link">Riwayat Pendaftaran</a>
                 
                 <?php if (strtolower($role) === 'admin'): ?>
-                    <a href="/manage-users" class="sidebar-link active" style="font-weight: 600;">
-                        ⚙️ Manajemen User
-                    </a>
+                    <a href="/manage-users" class="sidebar-link active" style="font-weight: 600;">⚙️ Manajemen User</a>
                 <?php endif; ?>
 
                 <span class="nav-separator"></span>
@@ -73,21 +60,15 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
             <section class="tab-content active">
                 <div class="tab-heading">
                     <h1>Manajemen User</h1>
-                    <p>Pantau dan atur hak akses serta status keaktifan seluruh anggota KSC.</p>
-                    
+                    <p>Atur hak akses serta status keaktifan anggota KSC.</p>
                     <a href="/tambah-pelatih" style="display:inline-block; margin-top: 15px; text-decoration: none; background-color: #0A4D8C; color: white; padding: 10px 20px; border-radius: 8px; font-weight: 600;">
                         ➕ Tambah Akun Pelatih
                     </a>
                 </div>
 
                 <?php if (isset($_SESSION['flash_sukses'])): ?>
-                    <div class="alert alert-success" style="background-color: #e6fffa; color: #319795; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #319795; font-size: 14px;">
+                    <div style="background-color: #e6fffa; color: #319795; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #319795; font-size: 14px;">
                         ✅ <?= $_SESSION['flash_sukses']; unset($_SESSION['flash_sukses']); ?>
-                    </div>
-                <?php endif; ?>
-                <?php if (isset($_SESSION['flash_error'])): ?>
-                    <div class="alert alert-danger" style="background-color: #ffe3e3; color: #e53e3e; padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #e53e3e; font-size: 14px;">
-                        ❌ <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
                     </div>
                 <?php endif; ?>
 
@@ -100,7 +81,7 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Aksi (Ubah Status)</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,19 +90,13 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                             if (!empty($users)): 
                                 foreach ($users as $u): 
                                     $statusLower = strtolower($u['status_anggota']);
-                                    $badgeClass = 'status-nonaktif';
-                                    if ($statusLower === 'aktif') $badgeClass = 'status-aktif';
-                                    if ($statusLower === 'suspend') $badgeClass = 'status-suspend';
+                                    $badgeClass = ($statusLower === 'aktif') ? 'status-aktif' : 'status-nonaktif';
                             ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td style="text-transform: capitalize;"><strong><?= htmlspecialchars($u['nama_lengkap']) ?></strong></td>
+                                <td><strong><?= htmlspecialchars($u['nama_lengkap']) ?></strong></td>
                                 <td><?= htmlspecialchars($u['email']) ?></td>
-                                <td>
-                                    <span class="badge-role" style="font-size: 11px; padding: 4px 8px; background: rgba(0,0,0,0.05); border-radius: 6px;">
-                                        <?= htmlspecialchars(ucfirst($u['role'])) ?>
-                                    </span>
-                                </td>
+                                <td><?= htmlspecialchars(ucfirst($u['role'])) ?></td>
                                 <td>
                                     <span class="<?= $badgeClass ?>">
                                         <?= htmlspecialchars(ucfirst($u['status_anggota'])) ?>
@@ -133,7 +108,6 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                                         <select name="status_baru" class="select-aksi" onchange="this.form.submit()">
                                             <option value="Aktif" <?= $statusLower === 'aktif' ? 'selected' : '' ?>>Aktif</option>
                                             <option value="Nonaktif" <?= $statusLower === 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
-                                            <option value="Suspend" <?= $statusLower === 'suspend' ? 'selected' : '' ?>>Suspend</option>
                                         </select>
                                     </form>
                                 </td>
