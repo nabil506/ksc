@@ -1,9 +1,9 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 $nama = $_SESSION['nama_aktif'] ?? 'Anggota KSC';
 $role = $_SESSION['role_aktif'] ?? 'Atlet';
 
-// Ambil status dari session (sesuai yang kita buat sebelumnya)
-$status_anggota = $_SESSION['status_aktif'] ?? 'Aktif';
+$status_anggota = $_SESSION['status_anggota'] ?? $_SESSION['status_aktif'] ?? 'Aktif';
 $isAktif = (strtolower($status_anggota) === 'aktif');
 $badgeBg = $isAktif ? '#d1fae5' : '#fee2e2';
 $badgeColor = $isAktif ? '#065f46' : '#991b1b';
@@ -22,11 +22,17 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
         <aside class="dashboard-sidebar">
             <div class="sidebar-user">
                 <div class="user-name"><?= htmlspecialchars($nama) ?></div>
-                <div class="user-role" style="display: flex; align-items: center; gap: 8px;">
-                    <?= htmlspecialchars(ucfirst($role)) ?>
-                    <span style="font-size: 10px; padding: 2px 8px; border-radius: 12px; background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; font-weight: 600;">
-                        <?= htmlspecialchars(ucfirst($status_anggota)) ?>
+                <div class="user-role" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 8px;">
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($role)) ?>
                     </span>
+                    
+                    <!-- Badge Status disembunyikan untuk Admin -->
+                    <?php if (strtolower($role) !== 'admin'): ?>
+                    <span style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($status_anggota)) ?>
+                    </span>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="dashboard-brand">KSC Dashboard</div>
@@ -38,13 +44,11 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                 <a href="/dashboardevent" class="sidebar-link">Event KSC</a>
                 <a href="/riwayat" class="sidebar-link">Riwayat Pendaftaran</a>
                 
-                <!-- MENU KHUSUS ADMIN -->
                 <?php if (strtolower($role) === 'admin'): ?>
                     <a href="/manage-users" class="sidebar-link" style="color: #3182ce; font-weight: 600;">
                         ⚙️ Manajemen User
                     </a>
                 <?php endif; ?>
-                <!-- END MENU KHUSUS ADMIN -->
 
                 <span class="nav-separator"></span>
                 <a href="/" class="sidebar-link back-home">Beranda Web</a>
@@ -58,7 +62,7 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                     <div>
                         <span class="eyebrow">
                             Krian Swimming Club
-                            <?php if (!$isAktif): ?>
+                            <?php if (!$isAktif && strtolower($role) !== 'admin'): ?>
                                 <span style="margin-left: 10px; background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold;">
                                     ⚠️ Akun Anda <?= htmlspecialchars(ucfirst($status_anggota)) ?>
                                 </span>
@@ -66,21 +70,20 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                         </span>
                         <h1>Halo, <?= htmlspecialchars($nama) ?>! 👋</h1>
                         
-                        <?php if ($isAktif): ?>
+                        <?php if ($isAktif || strtolower($role) === 'admin'): ?>
                             <p>Pantau jadwal latihanmu, daftarkan dirimu ke event, dan raih prestasi terbaikmu bersama KSC.</p>
                         <?php else: ?>
                             <p style="color: #c53030; font-weight: 500;">Akun kamu saat ini dibatasi. Hubungi Admin untuk mengaktifkan kembali akunmu.</p>
                         <?php endif; ?>
                     </div>
                     
-                    <?php if ($isAktif): ?>
+                    <?php if ($isAktif || strtolower($role) === 'admin'): ?>
                         <a href="/dashboardevent" class="dashboard-primary-btn" style="text-decoration:none; display:inline-block; text-align:center;">Daftar Event</a>
                     <?php else: ?>
                         <button class="dashboard-primary-btn" style="background-color: #a0aec0; cursor: not-allowed; border: none;" disabled>Event Ditutup</button>
                     <?php endif; ?>
                 </div>
 
-                <!-- Bagian Bawah Tetap Sama -->
                 <div class="dashboard-stats-grid">
                     <div class="dashboard-stat-card">
                         <span class="stat-icon">🏊</span>
@@ -100,7 +103,6 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                 </div>
 
                 <div class="athlete-home-grid">
-                    <!-- Kartu Riwayat Pendaftaran -->
                     <article class="dashboard-card athlete-card-reg">
                         <div class="athlete-card-header">
                             <span class="athlete-card-icon">📝</span>
@@ -115,7 +117,6 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                         <a href="/dashboardevent" class="dashboard-secondary-btn" style="text-decoration:none; display:block; text-align:center;">Lihat Semua Event</a>
                     </article>
 
-                    <!-- Kartu Event Terdekat -->
                     <article class="dashboard-card athlete-card-event">
                         <div class="athlete-card-header">
                             <span class="athlete-card-icon">🏆</span>
@@ -136,7 +137,7 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                             <div><strong id="cdDetikB">00</strong><small>Detik</small></div>
                         </div>
                         
-                        <?php if ($isAktif): ?>
+                        <?php if ($isAktif || strtolower($role) === 'admin'): ?>
                             <a href="/dashboardevent" class="dashboard-primary-btn" style="text-decoration:none; display:block; text-align:center;">Daftar Sekarang</a>
                         <?php else: ?>
                             <button class="dashboard-primary-btn" style="background-color: #a0aec0; width: 100%; cursor: not-allowed; border: none;" disabled>Ditutup</button>

@@ -24,8 +24,11 @@ class AdminController
             $userId = $_POST['user_id'];
             $statusBaru = $_POST['status_baru'];
 
+            // Controller cukup memanggil Model dan menampung hasilnya (true/false)
             $status = AdminModel::updatestatus($statusBaru, $userId);            
-            if ($stmt->execute([$statusBaru, $userId])) {
+            
+            // Pengecekan langsung menggunakan variabel $status tanpa sintaks database
+            if ($status) {
                 $_SESSION['flash_sukses'] = "Status user berhasil diperbarui!";
             } else {
                 $_SESSION['flash_error'] = "Gagal memperbarui status.";
@@ -59,6 +62,8 @@ class AdminController
             }
 
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            
+            // Proses insert ditangani sepenuhnya oleh Model
             $userId = RegisterModel::insert($email, $hashedPassword, 'pelatih');
 
             if ($userId) {

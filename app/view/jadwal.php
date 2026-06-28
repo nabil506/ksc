@@ -1,8 +1,9 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 $nama = $_SESSION['nama_aktif'] ?? 'Anggota KSC';
 $role = $_SESSION['role_aktif'] ?? 'Atlet';
 
-$status_anggota = $_SESSION['status_aktif'] ?? 'Aktif';
+$status_anggota = $_SESSION['status_anggota'] ?? $_SESSION['status_aktif'] ?? 'Aktif';
 $isAktif = (strtolower($status_anggota) === 'aktif');
 $badgeBg = $isAktif ? '#d1fae5' : '#fee2e2';
 $badgeColor = $isAktif ? '#065f46' : '#991b1b';
@@ -22,18 +23,24 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
         <aside class="dashboard-sidebar">
             <div class="sidebar-user">
                 <div class="user-name"><?= htmlspecialchars($nama) ?></div>
-                <div class="user-role" style="display: flex; align-items: center; gap: 8px;">
-                    <?= htmlspecialchars(ucfirst($role)) ?>
-                    <span style="font-size: 10px; padding: 2px 8px; border-radius: 12px; background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; font-weight: 600;">
-                        <?= htmlspecialchars(ucfirst($status_anggota)) ?>
+                <div class="user-role" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 8px;">
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($role)) ?>
                     </span>
+                    
+                    <!-- Badge Status disembunyikan untuk Admin -->
+                    <?php if (strtolower($role) !== 'admin'): ?>
+                    <span style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($status_anggota)) ?>
+                    </span>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="dashboard-brand">KSC Dashboard</div>
             <nav class="dashboard-nav">
                 <a href="/dashboard" class="sidebar-link">Beranda</a>
                 <a href="/profil" class="sidebar-link">Profil Saya</a>
-                <a href="/jadwal" class="sidebar-link active">Jadwal Latihan</a> <!-- ACTIVE DI SINI -->
+                <a href="/jadwal" class="sidebar-link active">Jadwal Latihan</a>
                 <a href="/dashboardevent" class="sidebar-link">Event KSC</a>
                 <a href="/riwayat" class="sidebar-link">Riwayat Pendaftaran</a>
                 

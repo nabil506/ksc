@@ -7,6 +7,8 @@ use app\core\Route;
 use app\controller\HomeController;
 use app\controller\LoginController;
 use app\controller\RegisterController;
+use app\controller\EventController;
+use app\controller\RiwayatController;
 
 // --- RUTE WEB PUBLIK ---
 Route::get('/', HomeController::class, 'index');
@@ -29,13 +31,17 @@ Route::get('/dashboard', HomeController::class, 'dashboard');
 Route::get('/profil', HomeController::class, 'profil');
 Route::post('/update-profile', BiodataController::class, 'prosesedit');
 Route::get('/jadwal', HomeController::class, 'jadwal');
-Route::get('/dashboardevent', HomeController::class, 'eventdashboard');
-Route::get('/riwayat', HomeController::class, 'riwayat');
+Route::get('/riwayat', RiwayatController::class, 'riwayat');
 
 // --- RUTE KHUSUS ADMIN ---
 Route::get('/manage-users', AdminController::class, 'manageUsers');
 Route::post('/update-status', AdminController::class, 'updateStatus');
 Route::get('/tambah-pelatih', AdminController::class, 'tambahPelatih');
 Route::post('/proses-tambah-pelatih', AdminController::class, 'prosesTambahPelatih');
+
+//rute event
+Route::get('/dashboardevent', EventController::class, 'eventdashboard');
+Route::post('/proses-tambah-event', EventController::class, 'prosesTambah');
+Route::post('/proses-daftar-event', EventController::class, 'prosesDaftar');
 
 Route::run();

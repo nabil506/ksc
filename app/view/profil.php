@@ -1,4 +1,5 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 $nama = $_SESSION['nama_aktif'] ?? 'Anggota KSC';
 $email = $_SESSION['user_email'] ?? 'email@ksc.com';
 $role = $_SESSION['role_aktif'] ?? 'Atlet';
@@ -6,13 +7,10 @@ $umur = $_SESSION['umur_aktif'] ?? '';
 $no_wa = $_SESSION['no_wa_aktif'] ?? '';
 $initials = strtoupper(substr($nama, 0, 2));
 
-// Logika Status untuk Sidebar & Konten
-$status_anggota = $_SESSION['status_aktif'] ?? 'Aktif';
+$status_anggota = $_SESSION['status_anggota'] ?? $_SESSION['status_aktif'] ?? 'Aktif';
 $isAktif = (strtolower($status_anggota) === 'aktif');
 $badgeBg = $isAktif ? '#d1fae5' : '#fee2e2';
 $badgeColor = $isAktif ? '#065f46' : '#991b1b';
-
-// Logika badge spesifik untuk konten profil
 $badgeClass = $isAktif ? 'status-active' : 'status-inactive';
 ?>
 <!DOCTYPE html>
@@ -42,17 +40,23 @@ $badgeClass = $isAktif ? 'status-active' : 'status-inactive';
         <aside class="dashboard-sidebar">
             <div class="sidebar-user">
                 <div class="user-name"><?= htmlspecialchars($nama) ?></div>
-                <div class="user-role" style="display: flex; align-items: center; gap: 8px;">
-                    <?= htmlspecialchars(ucfirst($role)) ?>
-                    <span style="font-size: 10px; padding: 2px 8px; border-radius: 12px; background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; font-weight: 600;">
-                        <?= htmlspecialchars(ucfirst($status_anggota)) ?>
+                <div class="user-role" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 8px;">
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($role)) ?>
                     </span>
+                    
+                    <!-- Badge Status disembunyikan untuk Admin -->
+                    <?php if (strtolower($role) !== 'admin'): ?>
+                    <span style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($status_anggota)) ?>
+                    </span>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="dashboard-brand">KSC Dashboard</div>
             <nav class="dashboard-nav">
                 <a href="/dashboard" class="sidebar-link">Beranda</a>
-                <a href="/profil" class="sidebar-link active">Profil Saya</a> <!-- ACTIVE DI SINI -->
+                <a href="/profil" class="sidebar-link active">Profil Saya</a>
                 <a href="/jadwal" class="sidebar-link">Jadwal Latihan</a>
                 <a href="/dashboardevent" class="sidebar-link">Event KSC</a>
                 <a href="/riwayat" class="sidebar-link">Riwayat Pendaftaran</a>
@@ -93,10 +97,15 @@ $badgeClass = $isAktif ? 'status-active' : 'status-inactive';
                             <label>Hak Akses</label>
                             <span class="badge-role"><?= htmlspecialchars(ucfirst($role)) ?></span>
                         </div>
+                        
+                        <!-- Status Anggota di profil disembunyikan untuk Admin -->
+                        <?php if (strtolower($role) !== 'admin'): ?>
                         <div class="profile-item">
                             <label>Status Anggota</label>
                             <span class="<?= $badgeClass ?>"><?= htmlspecialchars(ucfirst($status_anggota)) ?></span>
                         </div>
+                        <?php endif; ?>
+                        
                         <div class="profile-item">
                             <label>Klub Utama</label>
                             <span>Krian Swimming Club</span>

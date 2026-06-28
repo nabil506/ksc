@@ -46,12 +46,5 @@ class HomeController
     {
         require __DIR__ . '/../view/jadwal.php';
     }
-    public function eventdashboard()
-    {
-        require __DIR__ . '/../view/eventdashboard.php';
-    }
-    public function riwayat()
-    {
-        require __DIR__ . '/../view/riwayat.php';
-    }
+    
 }

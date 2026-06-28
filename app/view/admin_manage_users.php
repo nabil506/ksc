@@ -1,7 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 $nama = $_SESSION['nama_aktif'] ?? 'Admin KSC';
 $role = $_SESSION['role_aktif'] ?? 'admin';
-$status_anggota = $_SESSION['status_aktif'] ?? 'Aktif';
+
+// Ambil status dari session (sesuai yang kita buat sebelumnya)
+$status_anggota = $_SESSION['status_anggota'] ?? $_SESSION['status_aktif'] ?? 'Aktif';
 
 $isAktif = (strtolower($status_anggota) === 'aktif');
 $badgeBg = $isAktif ? '#d1fae5' : '#fee2e2';
@@ -29,12 +32,21 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
         <aside class="dashboard-sidebar">
             <div class="sidebar-user">
                 <div class="user-name"><?= htmlspecialchars($nama) ?></div>
-                <div class="user-role" style="display: flex; align-items: center; gap: 8px;">
-                    <?= htmlspecialchars(ucfirst($role)) ?>
-                    <span style="font-size: 10px; padding: 2px 8px; border-radius: 12px; background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; font-weight: 600;">
-                        <?= htmlspecialchars(ucfirst($status_anggota)) ?>
+                
+                <!-- Layout Sidebar yang disamakan dengan halaman lain -->
+                <div class="user-role" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 8px;">
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($role)) ?>
                     </span>
+                    
+                    <!-- Badge Status disembunyikan untuk Admin -->
+                    <?php if (strtolower($role) !== 'admin'): ?>
+                    <span style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <?= htmlspecialchars(strtoupper($status_anggota)) ?>
+                    </span>
+                    <?php endif; ?>
                 </div>
+
             </div>
             <div class="dashboard-brand">KSC Dashboard</div>
             
@@ -103,10 +115,10 @@ $badgeColor = $isAktif ? '#065f46' : '#991b1b';
                             ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td><strong><?= htmlspecialchars($u['nama_lengkap']) ?></strong></td>
+                                <td style="text-transform: capitalize;"><strong><?= htmlspecialchars($u['nama_lengkap']) ?></strong></td>
                                 <td><?= htmlspecialchars($u['email']) ?></td>
                                 <td>
-                                    <span class="badge-role" style="font-size: 11px; padding: 4px 8px;">
+                                    <span class="badge-role" style="font-size: 11px; padding: 4px 8px; background: rgba(0,0,0,0.05); border-radius: 6px;">
                                         <?= htmlspecialchars(ucfirst($u['role'])) ?>
                                     </span>
                                 </td>
