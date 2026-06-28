@@ -7,10 +7,8 @@ use app\model\RiwayatModel;
 class RiwayatController
 {
 
-    // Tambahkan metode ini di dalam class HomeController
     public function riwayat()
     {
-        if (session_status() === PHP_SESSION_NONE) session_start();
 
         // Pastikan user sudah login
         if (!isset($_SESSION['user_id']) || !isset($_SESSION['role_aktif'])) {

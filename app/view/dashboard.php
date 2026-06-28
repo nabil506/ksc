@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 $nama = $_SESSION['nama_aktif'] ?? 'Anggota KSC';
 $role = $_SESSION['role_aktif'] ?? 'Atlet';
 
-$status_anggota = $_SESSION['status_anggota'] ?? $_SESSION['status_aktif'] ?? 'Aktif';
+$status_anggota = $_SESSION['status_aktif'] ?? 'Nonaktif';
 $isAktif = (strtolower($status_anggota) === 'aktif');
 $badgeBg = $isAktif ? '#d1fae5' : '#fee2e2';
 $badgeColor = $isAktif ? '#065f46' : '#991b1b';

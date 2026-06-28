@@ -10,12 +10,12 @@ class EventController
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
-        $events = \app\model\EventModel::getAllEvents();
+        $events = EventModel::getAllEvents();
         $registeredEvents = []; // Default kosong
 
         // Jika yang login atlit, ambil daftar ID event yang sudah dia ikuti
         if (isset($_SESSION['user_id']) && $_SESSION['role_aktif'] === 'atlit') {
-            $registeredEvents = \app\model\EventModel::getRegisteredEventIds($_SESSION['user_id']);
+            $registeredEvents = EventModel::getRegisteredEventIds($_SESSION['user_id']);
         }
 
         require_once __DIR__ . '/../view/eventdashboard.php';
