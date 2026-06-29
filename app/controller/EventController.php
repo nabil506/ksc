@@ -3,13 +3,13 @@
 namespace app\controller;
 
 use app\model\EventModel;
+use app\config\Proteksi;
 
 class EventController
 {
     public function eventdashboard()
     {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-
+        Proteksi::proteksilogin();
         $events = EventModel::getAllEvents();
         $registeredEvents = []; // Default kosong
 
@@ -23,9 +23,9 @@ class EventController
     public function prosesTambah()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role_aktif'] === 'admin') {
-            $nama = $_POST['nama'];
-            $tanggal = $_POST['tanggal'];
-            $lokasi = $_POST['lokasi'];
+            $nama = $_POST['nama'] ?? '';
+            $tanggal = $_POST['tanggal'] ?? '';
+            $lokasi = $_POST['lokasi'] ?? '';
             $deskripsi = $_POST['deskripsi'] ?? ''; // Menangkap deskripsi
 
             EventModel::tambahEvent($nama, $tanggal, $lokasi, $deskripsi);
@@ -38,8 +38,8 @@ class EventController
     public function prosesDaftar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role_aktif'] === 'atlit') {
-            $userId = $_SESSION['user_id'];
-            $eventId = $_POST['event_id'];
+            $userId = $_SESSION['user_id'] ?? null;
+            $eventId = $_POST['event_id'] ?? '';
 
             // Pengecekan Keamanan Ganda: Cek apakah user sudah daftar di database
             $sudahDaftar = in_array($eventId, EventModel::getRegisteredEventIds($userId));

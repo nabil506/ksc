@@ -7,11 +7,9 @@
 
 body {
   background: #fff;
-  padding-top: 120px;
 }
 
 /* NAVBAR */
-
 .navbar {
   position: sticky;
   top: 0;
@@ -2045,6 +2043,138 @@ body.dark-mode .chart-container {
   color: white;
 }
 
+/* =========================
+   MOBILE RESPONSIVENESS FIXES
+========================= */
+@media (max-width: 768px) {
+
+  /* Reduce excessive paddings on mobile */
+  .about,
+  .coach,
+  .event-section,
+  .gallery,
+  .about-detail,
+  .coach-page,
+  .event-page,
+  .gallery-page,
+  .stats-section,
+  .facility-page,
+  .contact-section,
+  .history-section,
+  .achievement-section,
+  .why-section {
+    padding: 50px 5% !important;
+  }
+
+  .vision-mission {
+    padding: 30px 5% !important;
+  }
+
+  .stats,
+  .about-detail,
+  .footer-container {
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+  }
+
+  .stats {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .hero-content h1 {
+    font-size: 36px !important;
+    line-height: 48px !important;
+    margin-top: 10px;
+  }
+
+  .hero-content p {
+    font-size: 16px !important;
+    margin-top: 15px;
+  }
+
+  .page-banner h1,
+  .about-overlay h1 {
+    font-size: 36px !important;
+  }
+
+  .section-title h2,
+  .about-content h2,
+  .coach h2,
+  .coach-page h2,
+  .event-page h2,
+  .gallery-page h2,
+  .stats-section h2,
+  .facility-page h1,
+  .contact-section h1,
+  .history-section h2 {
+    font-size: 28px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .achievement-card h3 {
+    font-size: 32px !important;
+  }
+
+  .why-card {
+    font-size: 24px !important;
+  }
+
+  /* Fix grids that should be 1 column on mobile */
+  .coach-grid,
+  .event-grid,
+  .gallery-container,
+  .contact-container,
+  .achievement-grid,
+  .why-grid,
+  .facility-grid,
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Flex containers that should stack */
+  .org-container,
+  .visi-misi {
+    flex-direction: column !important;
+  }
+
+  /* Stat and Coach cards take full width */
+  .stat-card,
+  .coach-card {
+    width: 100% !important;
+  }
+
+  /* Auth box adjustment */
+  .auth-box {
+    width: 90% !important;
+    padding: 25px !important;
+  }
+
+  /* Footer adjustments */
+  .footer-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+    padding: 40px 5% !important;
+  }
+
+  .footer-col,
+  .footer-about,
+  .footer-links,
+  .footer-contact {
+    width: 100% !important;
+  }
+
+  /* Tables overflow */
+  .coach-schedule,
+  .calendar-event,
+  table {
+    overflow-x: auto !important;
+    display: block !important;
+    width: 100% !important;
+  }
+}
+
 /* =========================================================
    DASHBOARD PAGE - KRIAN SWIMMING CLUB
    Semua style khusus dashboard disendirikan di blok ini.
@@ -2192,6 +2322,7 @@ body.dashboard-page .tab-content.active {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -2551,7 +2682,7 @@ body.dashboard-page .countdown-box {
   color: #fff;
 }
 
-body.dashboard-page .countdown-box > span {
+body.dashboard-page .countdown-box>span {
   font-weight: 700;
 }
 
@@ -2809,9 +2940,19 @@ body.dashboard-page .reg-total-badge {
 }
 
 @keyframes regBadgePop {
-  0%   { transform: scale(0.7); opacity: 0; }
-  80%  { transform: scale(1.1); }
-  100% { transform: scale(1);   opacity: 1; }
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  80% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 body.dashboard-page .reg-chart-row {
@@ -2930,8 +3071,15 @@ body.dashboard-page .reg-recent-item {
 }
 
 @keyframes regItemSlide {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body.dashboard-page .reg-avatar {
@@ -2974,6 +3122,7 @@ body.dashboard-page .reg-recent-info small {
   body.dashboard-page .reg-chart-row {
     grid-template-columns: 1fr;
   }
+
   body.dashboard-page .reg-summary-card .mini-chart-wrap {
     height: 150px;
   }

@@ -39,12 +39,18 @@ class LoginController
 
                 $_SESSION['status_aktif'] = $user['status_anggota'] ?? 'Nonaktif';
 
+                // echo json_encode($user);
+                // echo json_encode([
+                    // 'user_id' => $_SESSION['user_id'],
+                    // 'user_email' => $_SESSION['user_email'],
+                // ]);
+                // return;
+
                 if (isset($_POST['submit'])) {
                     header("Location: /dashboard");
                     exit();
                 }
             } else {
-                // Jika password salah atau email tidak terdaftar
                 $_SESSION['flash_error'] = "Email atau Password salah!";
                 header("Location: /login");
                 exit();

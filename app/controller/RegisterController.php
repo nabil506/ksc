@@ -22,6 +22,7 @@ class RegisterController
             $role = 'atlit';
             $umur = 0;
             $no_wa = '-';
+            // $status_anggota = 'Nonaktif';
 
             if (empty($nama) || empty($email) || empty($password) || empty($confirmPassword)) {
                 $_SESSION['flash_error'] = "Semua kolom wajib diisi!";

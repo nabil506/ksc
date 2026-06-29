@@ -2,6 +2,8 @@
 
 namespace app\controller;
 
+use app\config\Proteksi;
+
 class HomeController
 {
 
@@ -36,15 +38,17 @@ class HomeController
     }
     public function dashboard()
     {
+        Proteksi::proteksilogin();
         require_once __DIR__ . '/../view/dashboard.php';
     }
     public function profil()
     {
+        Proteksi::proteksilogin();
         require __DIR__ . '/../view/profil.php';
     }
     public function jadwal()
     {
+        Proteksi::proteksilogin();
         require __DIR__ . '/../view/jadwal.php';
     }
-    
 }

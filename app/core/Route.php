@@ -1,7 +1,7 @@
 <?php
 
 namespace app\core;
-session_start();
+
 
 use app\config\Helper;
 
