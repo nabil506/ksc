@@ -13,17 +13,15 @@ class BiodataModel
         $fields = [];
         $params = [];
 
-        // Membentuk bagian "SET column1 = ?, column2 = ?"
         foreach ($data as $column => $value) {
             $fields[] = "$column = ?";
             $params[] = $value;
         }
 
-        // Jika tidak ada data yang diupdate, hentikan
         if (empty($fields)) return false;
 
-        $params[] = $id; // Tambahkan ID untuk WHERE
-        $query = "UPDATE atlit SET " . implode(", ", $fields) . " WHERE user_id = ?";
+        $params[] = $id; 
+        $query = "UPDATE users SET " . implode(", ", $fields) . " WHERE id = ?";
         
         $stmt = $db->prepare($query);
         return $stmt->execute($params);

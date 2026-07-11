@@ -9,34 +9,7 @@
 </head>
 
 <body>
-
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="/app/images/logo renang 2.jpg" alt="KSC Logo">
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">Tentang Kami</a></li>
-                <li><a href="/pelatih">Pelatih</a></li>
-                <li><a href="/event">Event</a></li>
-                <li><a href="/galeri">Galeri</a></li>
-                <li><a href="/fasilitas">Fasilitas</a></li>
-                <li><a href="/kontak" class="active">Kontak</a></li>
-            </ul>
-
-            <div class="menu-toggle">☰</div>
-
-            <button id="darkModeToggle" class="dark-btn">🌙</button>
-
-            <div class="auth-buttons">
-                <a href="/login" class="login-btn">Masuk</a>
-                <a href="/register" class="register-btn">Daftar</a>
-            </div>
-        </nav>
-    </header>
-
+<?php include __DIR__ . '/../layouts/navbar.php' ?>
     <section class="contact-section">
         <h1>Hubungi Kami</h1>
         <p class="contact-subtitle">

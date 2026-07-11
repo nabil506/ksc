@@ -42,7 +42,6 @@ $badgeColor = '#065f46';
                 <a href="/riwayat" class="sidebar-link">Riwayat Pendaftaran</a>
                 <a href="/manage-users" class="sidebar-link active" style="font-weight: 600;">⚙️ Manajemen User</a>
                 <span class="nav-separator"></span>
-                <a href="/" class="sidebar-link back-home">Beranda Web</a>
                 <a href="/logout" class="logout-link">Logout</a>
             </nav>
         </aside>

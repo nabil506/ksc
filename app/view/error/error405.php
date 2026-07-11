@@ -81,7 +81,7 @@
         <div class="error-icon">🚫🛑</div>
         <h1>405</h1>
         <h2>Metode Tidak Diizinkan!</h2>
-        <p>Nabil, kamu mencoba mengakses halaman ini langsung dari URL browser (GET), padahal rute ini dikunci dan hanya
+        <p>kamu mencoba mengakses halaman ini langsung dari URL browser (GET), padahal rute ini dikunci dan hanya
             menerima kiriman data data dari Form pendaftaran (POST).</p>
         <a href="/" class="back-btn">
             ⬅️ Kembali ke Beranda

@@ -7,7 +7,7 @@ class Proteksi
 
     {
 
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['user']['user_id'])) {
 
             $_SESSION['flash_error'] = "Kamu harus login terlebih dahulu!";
 

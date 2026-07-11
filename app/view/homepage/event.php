@@ -9,34 +9,7 @@
 </head>
 
 <body>
-
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="/app/images/logo renang 2.jpg" alt="KSC Logo">
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">Tentang Kami</a></li>
-                <li><a href="/pelatih">Pelatih</a></li>
-                <li><a href="/event" class="active">Event</a></li>
-                <li><a href="/galeri">Galeri</a></li>
-                <li><a href="/fasilitas">Fasilitas</a></li>
-                <li><a href="/kontak">Kontak</a></li>
-            </ul>
-
-            <div class="menu-toggle">☰</div>
-
-            <button id="darkModeToggle" class="dark-btn">🌙</button>
-
-            <div class="auth-buttons">
-                <a href="/login" class="login-btn">Masuk</a>
-                <a href="/register" class="register-btn">Daftar</a>
-            </div>
-        </nav>
-    </header>
-
+    <?php include __DIR__ . '/../layouts/navbar.php' ?>
     <section class="page-banner">
         <h1>Agenda Kompetisi</h1>
     </section>
@@ -44,25 +17,32 @@
     <section class="event-page">
         <h2>Event Mendatang</h2>
         <div class="event-grid">
-            <div class="event-item">
-                <img src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=1000" alt="KSC National Cup">
-                <div class="event-body">
-                    <h3>KSC National Cup 2026</h3>
-                    <p>📅 30 Juni 2026</p>
-                    <p>📍 Kolam Renang Krian</p>
-                    <div id="countdown"></div>
-                    <button class="register-event-btn" onclick="openEventForm()">Daftar Event</button>
+
+            <?php if (!empty($allevent)): ?>
+                <?php foreach ($allevent as $event): ?>
+                    <div class="event-item">
+
+                        <img src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=1000" alt="<?= htmlspecialchars($event['nama_event']) ?>">
+
+                        <div class="event-body">
+                            <h3><?= htmlspecialchars($event['nama_event']) ?></h3>
+                            <p>📅 <?= date('d F Y', strtotime($event['tanggal_event'])) ?></p>
+                            <p>📍 <?= htmlspecialchars($event['lokasi']) ?></p>
+
+                            <div id="countdown-<?= $event['id'] ?>"></div>
+
+                            <button class="register-event-btn" onclick="window.location.href='/login'">Daftar Event</button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+
+                <div style="grid-column: 1 / -1; text-align: center; color: #718096; padding: 40px;">
+                    Belum ada event mendatang saat ini.
                 </div>
-            </div>
-            <div class="event-item">
-                <img src="https://images.unsplash.com/photo-1560090995-01632a28895b?w=1000" alt="Liga Renang">
-                <div class="event-body">
-                    <h3>Liga Renang Jawa Timur</h3>
-                    <p>📅 15 Juli 2026</p>
-                    <p>📍 Surabaya</p>
-                    <button class="register-event-btn" onclick="openEventForm()">Daftar Event</button>
-                </div>
-            </div>
+
+            <?php endif; ?>
+
         </div>
     </section>
 
@@ -136,4 +116,5 @@
 
     <script src="/app/js/script.js"></script>
 </body>
+
 </html>

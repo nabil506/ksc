@@ -7,24 +7,25 @@ class RegisterController
 {
     public function register()
     {
-        require_once __DIR__ . '/../view/daftar.php';
+        require_once __DIR__ . '/../view/auth/daftar.php';
     }
 
     public function prosesregister()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nama = htmlspecialchars(trim($_POST['nama'] ?? ''));
+            $nama_lengkap = htmlspecialchars(trim($_POST['nama'] ?? ''));
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirm_password'] ?? '';
             
-            // Otomatis diset menjadi atlit
-            $role = 'atlit';
-            $umur = 0;
-            $no_wa = '-';
-            // $status_anggota = 'Nonaktif';
+            // ID Role 2 = atlit (berdasarkan tabel roles di database)
+            $id_role_atlit = 2;
+            
+            // Set null agar kosong (bisa diisi nanti di profil)
+            $umur = null;
+            $no_wa = null;
 
-            if (empty($nama) || empty($email) || empty($password) || empty($confirmPassword)) {
+            if (empty($nama_lengkap) || empty($email) || empty($password) || empty($confirmPassword)) {
                 $_SESSION['flash_error'] = "Semua kolom wajib diisi!";
                 header("Location: /register");
                 exit();
@@ -37,16 +38,15 @@ class RegisterController
             }
 
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $userId = RegisterModel::insert($email, $hashedPassword, $role);
+            
+            // Lakukan 1 kali INSERT saja
+            $userId = RegisterModel::insert($nama_lengkap, $email, $umur, $no_wa, $hashedPassword, $id_role_atlit);
 
             if ($userId) {
-                $detailSaved = RegisterModel::insertAtlitDetail($userId, $nama, $umur, $no_wa);
-
-                if ($detailSaved) {
-                    $_SESSION['flash_sukses'] = "Pendaftaran Atlit Berhasil! Silakan Login.";
-                    header("Location: /login");
-                    exit();
-                }
+                // Tidak perlu lagi memanggil insertAtlitDetail
+                $_SESSION['flash_sukses'] = "Pendaftaran Atlit Berhasil! Silakan Login.";
+                header("Location: /login");
+                exit();
             }
 
             $_SESSION['flash_error'] = "Pendaftaran Gagal! Email mungkin sudah digunakan.";

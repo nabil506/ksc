@@ -10,51 +10,7 @@
 </head>
 
 <body>
-
-    <header>
-
-        <nav class="navbar">
-
-            <div class="logo">
-                <img src="/app/images/logo renang 2.jpg" alt="KSC Logo">
-            </div>
-
-            <ul class="nav-links">
-
-                <li><a href="/">Home</a></li>
-                <li><a href="/about" class="active">Tentang Kami</a></li>
-                <li><a href="/pelatih">Pelatih</a></li>
-                <li><a href="/event">Event</a></li>
-                <li><a href="/galeri">Galeri</a></li>
-                <li><a href="/fasilitas">Fasilitas</a></li>
-                <li><a href="/kontak">Kontak</a></li>
-
-            </ul>
-
-            <div class="menu-toggle">
-                ☰
-            </div>
-
-            <button id="darkModeToggle" class="dark-btn">
-                🌙
-            </button>
-
-            <div class="auth-buttons">
-
-                <a href="/login" class="login-btn">
-                    Masuk
-                </a>
-
-                <a href="/register" class="register-btn">
-                    Daftar
-                </a>
-
-            </div>
-
-        </nav>
-
-    </header>
-
+    <?php include __DIR__ . '/../layouts/navbar.php' ?>
     <section class="about-hero">
 
         <div class="about-overlay">
@@ -70,7 +26,7 @@
 
     </section>
 
-    <section class="history-section hidden">
+  <section class="history-section ">
 
         <div class="container">
 
@@ -90,7 +46,7 @@
 
     </section>
 
-    <section class="vision-mission hidden">
+  <section class="vision-mission ">
 
         <div class="visi-box">
 
@@ -123,36 +79,36 @@
 
     </section>
 
-    <section class="achievement-section hidden">
+  <section class="achievement-section ">
 
         <h2>Pencapaian Kami</h2>
 
         <div class="achievement-grid">
 
-            <div class="achievement-card">
+            <!-- <div class="achievement-card">
 
                 <h3>25+</h3>
                 <p>Kejuaraan</p>
 
-            </div>
+            </div> -->
 
             <div class="achievement-card">
 
-                <h3>150+</h3>
+                <h3><?= htmlspecialchars($atlitAktif) ?></h3>
                 <p>Anggota</p>
 
             </div>
 
             <div class="achievement-card">
 
-                <h3>12</h3>
+                <h3><?= htmlspecialchars($pelatihAktif) ?></h3>
                 <p>Pelatih</p>
 
             </div>
 
             <div class="achievement-card">
 
-                <h3>8</h3>
+                <h3>2025</h3>
                 <p>Tahun Berdiri</p>
 
             </div>
@@ -161,7 +117,7 @@
 
     </section>
 
-    <section class="why-section hidden">
+  <section class="why-section ">
 
         <h2>Mengapa Memilih KSC?</h2>
 
@@ -191,7 +147,7 @@
 
     </section>
 
-    <section class="organization hidden">
+  <section class="organization ">
 
         <h2>Struktur Organisasi</h2>
 
@@ -216,7 +172,7 @@
 
     </section>
 
-    <footer class="footer">
+  <footer class="footer">
 
         <div class="footer-container">
 
@@ -268,9 +224,6 @@
         </div>
 
     </footer>
-
-    <script src="/app/js/script.js"></script>
-
 </body>
 
 </html>

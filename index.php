@@ -2,20 +2,26 @@
 session_start();
 require_once 'vendor/autoload.php';
 
+use app\controller\AboutController;
 use app\controller\AdminController;
 use app\controller\BiodataController;
+use app\controller\DashboardController;
+use app\controller\EventController;
 use app\core\Route;
 use app\controller\HomeController;
 use app\controller\LoginController;
 use app\controller\RegisterController;
-use app\controller\EventController;
+use app\controller\EventDashboardController;
+use app\controller\ProfilController;
 use app\controller\RiwayatController;
+use app\controller\JadwalController;
+use app\controller\PelatihController;
 
 // --- RUTE WEB PUBLIK ---
 Route::get('/', HomeController::class, 'index');
-Route::get('/about', HomeController::class, 'about');
-Route::get('/pelatih', HomeController::class, 'pelatih');
-Route::get('/event', HomeController::class, 'event');
+Route::get('/about', AboutController::class, 'about');
+Route::get('/pelatih', PelatihController::class, 'pelatih');
+Route::get('/event', EventController::class, 'event');
 Route::get('/galeri', HomeController::class, 'galeri');
 Route::get('/fasilitas', HomeController::class, 'fasilitas');
 Route::get('/kontak', HomeController::class, 'kontak');
@@ -28,10 +34,12 @@ Route::post('/proses-login', LoginController::class, 'proseslogin');
 Route::get('/logout', LoginController::class, 'logout');
 
 // --- RUTE DASHBOARD UMUM (Atlit & Pelatih & Admin) ---
-Route::get('/dashboard', HomeController::class, 'dashboard');
-Route::get('/profil', HomeController::class, 'profil');
+Route::get('/dashboard', DashboardController::class, 'dashboard');
+Route::get('/profil', ProfilController::class, 'profil');
 Route::post('/update-profile', BiodataController::class, 'prosesedit');
-Route::get('/jadwal', HomeController::class, 'jadwal');
+Route::get('/jadwal', JadwalController::class, 'jadwal');
+Route::post('/tambah-jadwal', JadwalController::class, 'tambah');
+Route::post('/hapus-jadwal', JadwalController::class, 'hapus');
 Route::get('/riwayat', RiwayatController::class, 'riwayat');
 
 // --- RUTE KHUSUS ADMIN ---
@@ -41,8 +49,10 @@ Route::get('/tambah-pelatih', AdminController::class, 'tambahPelatih');
 Route::post('/proses-tambah-pelatih', AdminController::class, 'prosesTambahPelatih');
 
 //rute event
-Route::get('/dashboardevent', EventController::class, 'eventdashboard');
-Route::post('/proses-tambah-event', EventController::class, 'prosesTambah');
-Route::post('/proses-daftar-event', EventController::class, 'prosesDaftar');
+Route::get('/dashboardevent', EventDashboardController::class, 'eventdashboard');
+Route::post('/proses-tambah-event', EventDashboardController::class, 'prosesTambah');
+Route::post('/proses-daftar-event', EventDashboardController::class, 'prosesDaftar');
+Route::post('/proses-edit-event', EventDashboardController::class, 'editEvent');
+Route::post('/proses-hapus-event', EventDashboardController::class, 'hapusEvent');
 
 Route::run();

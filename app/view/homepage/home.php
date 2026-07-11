@@ -13,58 +13,7 @@
 </head>
 
 <body>
-
-    <header>
-
-        <nav class="navbar">
-
-            <div class="logo">
-                <img src="/app/images/logo renang 2.jpg" alt="KSC Logo">
-            </div>
-
-            <ul class="nav-links">
-
-                <li><a href="/" class="active">Home</a></li>
-
-                <li><a href="/about">Tentang Kami</a></li>
-
-                <li><a href="/pelatih">Pelatih</a></li>
-
-                <li><a href="/event">Event</a></li>
-
-                <li><a href="/galeri">Galeri</a></li>
-
-                <li><a href="/fasilitas">Fasilitas</a></li>
-
-                <li><a href="/kontak">Kontak</a></li>
-
-            </ul>
-
-            <div class="menu-toggle">
-
-                ☰
-
-            </div>
-
-            <button id="darkModeToggle" class="dark-btn">
-                🌙
-            </button>
-
-            <div class="auth-buttons">
-
-                <a href="/login" class="login-btn">
-                    Masuk
-                </a>
-
-                <a href="/register" class="register-btn">
-                    Daftar
-                </a>
-
-            </div>
-
-        </nav>
-
-    </header>
+    <?php include __DIR__ . '/../layouts/navbar.php' ?>
 
     <section class="hero">
 
@@ -98,28 +47,23 @@
     <section class="stats">
 
         <div class="stat-card">
-            <h2>150+</h2>
+            <h2><?= htmlspecialchars($atlitAktif) ?></h2>
             <p>Anggota Aktif</p>
         </div>
 
         <div class="stat-card">
-            <h2>10</h2>
+            <h2><?= htmlspecialchars($pelatihAktif) ?></h2>
             <p>Pelatih Profesional</p>
         </div>
 
         <div class="stat-card">
-            <h2>25</h2>
-            <p>Kejuaraan</p>
-        </div>
-
-        <div class="stat-card">
-            <h2>5</h2>
+            <h2>2025</h2>
             <p>Tahun Berdiri</p>
         </div>
 
     </section>
 
-    <section class="about hidden">
+    <section class="about">
 
         <div class="about-image">
             <img src="https://images.unsplash.com/photo-1600965962102-9d260a71890d?w=800" alt="">
@@ -149,47 +93,37 @@
 
     </section>
 
-    <section class="coach hidden">
+    <section class="coach ">
 
         <h2>Tim Pelatih</h2>
 
         <div class="coach-container">
 
-            <div class="coach-card">
+            <?php if (!empty($pelatihList)): ?>
+                <?php foreach ($pelatihList as $p): ?>
+                    <div class="coach-card">
 
-                <img src="https://randomuser.me/api/portraits/men/32.jpg">
+                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($p['nama_lengkap']) ?>&background=0A4D8C&color=fff&size=150&bold=true" alt="Foto <?= htmlspecialchars($p['nama_lengkap']) ?>">
 
-                <h3>Coach Andi</h3>
+                        <h3><?= htmlspecialchars($p['nama_lengkap']) ?></h3>
 
-                <p>Pelatih Renang Dasar</p>
+                        <p>Pelatih KSC</p>
 
-            </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
 
-            <div class="coach-card">
+                <div style="width: 100%; text-align: center; color: #718096; padding: 20px;">
+                    <p>Belum ada pelatih yang terdaftar.</p>
+                </div>
 
-                <img src="https://randomuser.me/api/portraits/women/44.jpg">
-
-                <h3>Coach Rina</h3>
-
-                <p>Pelatih Prestasi</p>
-
-            </div>
-
-            <div class="coach-card">
-
-                <img src="https://randomuser.me/api/portraits/men/68.jpg">
-
-                <h3>Coach Budi</h3>
-
-                <p>Pelatih Fisik</p>
-
-            </div>
+            <?php endif; ?>
 
         </div>
 
     </section>
 
-    <section class="event-section hidden">
+    <section class="event-section ">
 
         <div class="section-title">
             <h2>Agenda Kompetisi</h2>
@@ -197,52 +131,50 @@
         </div>
 
         <div class="event-container">
+            <?php
+            // Pastikan variabel $events ada dan tidak kosong
+            if (!empty($events)):
+                $today = strtotime(date('Y-m-d')); // Mengambil waktu hari ini
 
-            <div class="event-card">
+                foreach ($events as $event):
+                    $eventDate = strtotime($event['tanggal_event']);
+                    $isExpired = ($today > $eventDate);
 
-                <img src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=1000" alt="">
+                    // Menentukan teks dan warna badge berdasarkan tanggal
+                    $statusBadge = $isExpired ? 'SELESAI' : 'UPCOMING';
+                    $badgeBg = $isExpired ? '#edf2f7' : '#ebf4ff';
+                    $badgeColor = $isExpired ? '#718096' : '#3182ce';
+            ?>
+                    <div class="event-card">
+                        <img src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=1000" alt="Event KSC">
 
-                <div class="event-info">
+                        <div class="event-info">
+                            <span class="badge" style="background: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 10px; display: inline-block; text-transform: uppercase;">
+                                <?= $statusBadge ?>
+                            </span>
 
-                    <span class="badge">BERJALAN</span>
+                            <h3 style="margin-top: 5px;"><?= htmlspecialchars($event['nama_event']) ?></h3>
 
-                    <h3>KSC National Cup 2026</h3>
+                            <p>📅 <?= date('d M Y', $eventDate) ?></p>
+                            <p>📍 <?= htmlspecialchars($event['lokasi']) ?></p>
 
-                    <p>📅 30 Mei 2026</p>
-                    <p>🕒 08:00 WIB</p>
-                    <p>📍 Kolam Renang Krian</p>
-
-                    <button>Lihat Detail</button>
-
+                            <a href="/login" style="text-decoration: none;">
+                                <button style="cursor: pointer; width: 100%; margin-top: 10px;">Daftar / Detail</button>
+                            </a>
+                        </div>
+                    </div>
+                <?php
+                endforeach;
+            else:
+                ?>
+                <div style="width: 100%; text-align: center; padding: 40px; color: #718096;">
+                    <p>Belum ada agenda kompetisi saat ini. Nantikan info selanjutnya!</p>
                 </div>
-
-            </div>
-
-            <div class="event-card">
-
-                <img src="https://images.unsplash.com/photo-1560090995-01632a28895b?w=1000" alt="">
-
-                <div class="event-info">
-
-                    <span class="badge">BERJALAN</span>
-
-                    <h3>Liga Renang KSC 2026</h3>
-
-                    <p>📅 31 Mei 2026</p>
-                    <p>🕒 08:00 WIB</p>
-                    <p>📍 Kraton Waterpark Krian</p>
-
-                    <button>Lihat Detail</button>
-
-                </div>
-
-            </div>
-
+            <?php endif; ?>
         </div>
-
     </section>
 
-    <section class="gallery hidden">
+    <section class="gallery">
 
         <div class="section-title">
             <h2>Galeri Kegiatan</h2>
@@ -260,50 +192,38 @@
 
     </section>
 
-    <section class="stats-section hidden">
+    <section class="stats-section ">
 
         <h2>Statistik Krian Swimming Club</h2>
 
         <div class="stats-grid">
 
             <div class="stat-box">
-
-                <h3 class="counter" data-target="150">
+                <h3 class="counter" data-target="<?= $atlitAktif ?>">
                     0
                 </h3>
-
-                <p>Anggota Aktif</p>
-
+                <p>Atlit Aktif</p>
             </div>
 
-            <div class="stat-box">
-
+            <!-- <div class="stat-box">
                 <h3 class="counter" data-target="25">
                     0
                 </h3>
-
                 <p>Kejuaraan</p>
+            </div> -->
 
+            <div class="stat-box">
+                <h3 class="counter" data-target="<?= $pelatihAktif ?>">
+                    0
+                </h3>
+                <p>Pelatih Aktif</p>
             </div>
 
             <div class="stat-box">
-
-                <h3 class="counter" data-target="12">
+                <h3 class="counter" data-target="2025">
                     0
                 </h3>
-
-                <p>Pelatih</p>
-
-            </div>
-
-            <div class="stat-box">
-
-                <h3 class="counter" data-target="8">
-                    0
-                </h3>
-
                 <p>Tahun Berdiri</p>
-
             </div>
 
         </div>
@@ -367,10 +287,6 @@
         </div>
 
     </footer>
-
-    <script src="/app/js/script.js"></script>
-
-
 </body>
 
 </html>
