@@ -60,19 +60,19 @@
     <div class="dashboard-container">
         <aside class="dashboard-sidebar">
             <div class="sidebar-user">
-                <div class="user-name"><?= htmlspecialchars($nama_lengkap) ?></div>
+                <div class="user-name"><?= htmlspecialchars($user['nama_lengkap']) ?></div>
                 <div class="user-role" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 8px;">
                     <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
-                        <?= htmlspecialchars(strtoupper($role_name)) ?>
+                        <?= htmlspecialchars(strtoupper($user['role_name'])) ?>
                     </span>
 
-                    <?php if (strtolower($role_name) !== 'admin'): ?>
+                    <?php if (strtolower($user['role_name']) !== 'admin'): ?>
                         <?php
-                        $badgeBg = (strtolower($status_anggota) === 'aktif') ? '#d1fae5' : '#fee2e2';
-                        $badgeColor = (strtolower($status_anggota) === 'aktif') ? '#065f46' : '#991b1b';
+                        $badgeBg = (strtolower($user['status_anggota']) === 'aktif') ? '#d1fae5' : '#fee2e2';
+                        $badgeColor = (strtolower($user['status_anggota']) === 'aktif') ? '#065f46' : '#991b1b';
                         ?>
                         <span style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
-                            <?= htmlspecialchars(strtoupper($status_anggota)) ?>
+                            <?= htmlspecialchars(strtoupper($user['status_anggota'])) ?>
                         </span>
                     <?php endif; ?>
                 </div>
@@ -85,7 +85,7 @@
                 <a href="/dashboardevent" class="sidebar-link">Event KSC</a>
                 <a href="/riwayat" class="sidebar-link active">Riwayat Pendaftaran</a>
 
-                <?php if (strtolower($role_name) === 'admin'): ?>
+                <?php if (strtolower($user['role_name']) === 'admin'): ?>
                     <a href="/manage-users" class="sidebar-link" style="color: #3182ce; font-weight: 600;">⚙️ Manajemen User</a>
                 <?php endif; ?>
 
@@ -97,7 +97,7 @@
         <main class="dashboard-main">
             <section class="tab-content active">
                 <div class="tab-heading">
-                    <?php if (strtolower($role_name) === 'admin'): ?>
+                    <?php if (strtolower($user['role_name']) === 'admin'): ?>
                         <h1>Data Pendaftar Event</h1>
                         <p>Daftar seluruh atlit yang telah mendaftar ke event KSC.</p>
                     <?php else: ?>
@@ -118,10 +118,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($riwayat)): ?>
+                            <?php if (empty($data['riwayat'])): ?>
                                 <tr>
                                     <td colspan="5" style="text-align:center; padding: 30px; color: #718096;">
-                                        <?php if (strtolower($role_name) === 'admin'): ?>
+                                        <?php if (strtolower($user['role_name']) === 'admin'): ?>
                                             Belum ada atlit yang mendaftar pada event apa pun.
                                         <?php else: ?>
                                             Belum ada riwayat pendaftaran.<br>
@@ -130,7 +130,7 @@
                                     </td>
                                 </tr>
                             <?php else: ?>
-                                <?php foreach ($riwayat as $index => $row): ?>
+                                <?php foreach ($data['riwayat'] as $index => $row): ?>
                                     <tr>
                                         <td><?= $index + 1 ?></td>
 

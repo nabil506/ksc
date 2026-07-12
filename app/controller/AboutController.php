@@ -1,7 +1,7 @@
 <?php
 
 namespace app\controller;
-use app\model\EventModel;
+use app\model\EventDashboardModel;
 use app\model\HomeModel;
 use app\config\View;
 
@@ -10,7 +10,7 @@ class AboutController
 
     public function about()
     {
-        $events = EventModel::getAllEvents();
+        $events = EventDashboardModel::getAllEvents();
         $atlitAktif = HomeModel::getAtlitAktif();
         $pelatihAktif = HomeModel::getPelatihAktif();
         $pelatihList = HomeModel::getDaftarPelatih();

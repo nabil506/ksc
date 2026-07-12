@@ -45,16 +45,25 @@
                 <th>Hari</th>
                 <th>Jam</th>
             </tr>
-            <tr>
-                <td>Coach Andi</td>
-                <td>Senin - Rabu</td>
-                <td>15.00 - 17.00</td>
-            </tr>
-            <tr>
-                <td>Coach Rina</td>
-                <td>Selasa - Kamis</td>
-                <td>16.00 - 18.00</td>
-            </tr>
+            
+            <?php if (!empty($jadwalPelatih)): ?>
+                <?php foreach ($jadwalPelatih as $jadwal): ?>
+                    <tr>
+                        <td style="font-weight: 600;">
+                            Coach <?= htmlspecialchars($jadwal['nama_pelatih']) ?>
+                        </td>
+                        <td><?= htmlspecialchars($jadwal['hari']) ?></td>
+                        <td><?= htmlspecialchars($jadwal['waktu']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #718096; padding: 20px;">
+                        Belum ada jadwal pelatih yang terdaftar saat ini.
+                    </td>
+                </tr>
+            <?php endif; ?>
+            
         </table>
     </section>
 
@@ -77,7 +86,7 @@
                 <h3>Kontak</h3>
                 <p>📍 Krian, Sidoarjo</p>
                 <p>📞 0812-3456-7890</p>
-                <p>✉ info@ksc.com</p>
+                <p>✉  krianswimmingclub@gmail.com</p>
             </div>
         </div>
         <div class="footer-bottom">

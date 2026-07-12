@@ -802,7 +802,10 @@ footer {
 
   color: white;
 }
-
+.coach-schedule h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 .coach-schedule th,
 .coach-schedule td {
   padding: 15px;
@@ -881,6 +884,11 @@ footer {
 
 .calendar-event {
   margin-top: 80px;
+}
+
+.calendar-event h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .calendar-event table {
@@ -2164,9 +2172,8 @@ body.dark-mode .chart-container {
   .footer-contact {
     width: 100% !important;
   }
-
   /* Tables overflow */
-  .coach-schedule,
+  .coach-schedule
   .calendar-event,
   table {
     overflow-x: auto !important;
@@ -3324,4 +3331,75 @@ body.dashboard-page .athlete-countdown-mini small {
   body.dashboard-page .athlete-home-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* =========================================
+   PERBAIKAN SIMETRIS 3 KOTAK (STAT & ACHIEVEMENT)
+   ========================================= */
+.stats-grid,
+.achievement-grid {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  flex-wrap: wrap !important;
+  gap: 30px !important;
+  max-width: 1000px !important;
+  margin: 40px auto 0 !important;
+}
+
+.stat-box,
+.achievement-card {
+  flex: 1 1 250px !important;
+  /* Kotak bisa mengecil, minimal 250px */
+  max-width: 320px !important;
+  /* Mencegah kotak melar menjadi raksasa */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* =========================================
+   PERBAIKAN SIMETRIS HALAMAN EVENT
+   ========================================= */
+.event-grid {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  flex-wrap: wrap !important;
+  gap: 30px !important;
+  max-width: 1100px !important;
+  margin: 40px auto 0 !important;
+}
+
+.event-item {
+  flex: 1 1 350px !important;
+  /* Minimal lebar 350px */
+  max-width: 400px !important;
+  /* Batas maksimal lebar kartu agar tidak raksasa saat cuma 1 event */
+  display: flex !important;
+  flex-direction: column !important;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-item img {
+  width: 100% !important;
+  height: 250px !important;
+  object-fit: cover !important;
+}
+
+.event-body {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  /* Memastikan isi teks memenuhi sisa ruang */
+  padding: 25px !important;
+}
+
+/* Memaksa tombol untuk selalu berada di bagian paling bawah kartu */
+.event-body .register-event-btn {
+  margin-top: auto !important;
 }

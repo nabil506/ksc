@@ -68,7 +68,7 @@
         </table>
     </section>
 
-    <div id="eventModal" class="event-modal">
+    <!-- <div id="eventModal" class="event-modal">
         <div class="event-modal-content">
             <span class="close-modal" onclick="closeEventForm()">×</span>
             <h2>Pendaftaran Atlet</h2>
@@ -84,8 +84,8 @@
                 </select>
                 <button type="submit">Kirim Pendaftaran</button>
             </form>
-        </div>
-    </div>
+        </div>j
+    </div> -->
 
     <footer class="footer">
         <div class="footer-container">
@@ -106,7 +106,7 @@
                 <h3>Kontak</h3>
                 <p>📍 Krian, Sidoarjo</p>
                 <p>📞 0812-3456-7890</p>
-                <p>✉ info@ksc.com</p>
+                <p>✉ krianswimmingclub@gmail.com</p>
             </div>
         </div>
         <div class="footer-bottom">

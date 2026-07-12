@@ -69,7 +69,7 @@
                 <h3>Kontak</h3>
                 <p>📍 Krian, Sidoarjo</p>
                 <p>📞 0812-3456-7890</p>
-                <p>✉ info@ksc.com</p>
+                <p>✉  krianswimmingclub@gmail.com</p>
             </div>
         </div>
         <div class="footer-bottom">
