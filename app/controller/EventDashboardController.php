@@ -15,25 +15,21 @@ class EventDashboardController
         $registeredEvents = [];
 
         // Status atlit
-        $isAktif = (isset($_SESSION['user']['status_anggota']) && $_SESSION['user']['status_anggota'] === 'Aktif');
-
+        $isAktif = (isset($_SESSION['user']['status_anggota']) && strtolower($_SESSION['user']['status_anggota']) === 'aktif');
         if (isset($_SESSION['user']['user_id']) && $_SESSION['user']['role_name'] === 'atlit') {
             $registeredEvents = EventDashboardModel::getRegisteredEventIds($_SESSION['user']['user_id']);
         }
 
-        // Gabungkan semua data ke dalam satu array
         $user = $_SESSION['user'];
-        $data = [
-            'events'           => $events,
-            'registeredEvents' => $registeredEvents,
-            'isAktif'          => $isAktif,
-            'today'            => strtotime(date('Y-m-d')),
-        ];
+
 
         View::render(
             'dashboard/eventdashboard',
             [
-                'data' => $data,
+                'events'           => $events,
+                'registeredEvents' => $registeredEvents,
+                'isAktif'          => $isAktif,
+                'today'            => strtotime(date('Y-m-d')),
                 'user' => $user,
             ]
         );
@@ -44,7 +40,7 @@ class EventDashboardController
             $nama = $_POST['nama'] ?? '';
             $tanggal = $_POST['tanggal'] ?? '';
             $lokasi = $_POST['lokasi'] ?? '';
-            $deskripsi = $_POST['deskripsi'] ?? ''; // Menangkap deskripsi
+            $deskripsi = $_POST['deskripsi'] ?? '';
 
             EventDashboardModel::tambahEvent($nama, $tanggal, $lokasi, $deskripsi);
 
@@ -55,36 +51,32 @@ class EventDashboardController
 
     public function prosesDaftar()
     {
-        // 1. Perbaiki pengecekan session menggunakan struktur $_SESSION['user']
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user']) && $_SESSION['user']['role_name'] === 'atlit') {
 
-            // 2. Ambil ID User dari dalam array ['user']. 
-            // Kita gunakan fallback ('id' atau 'user_id') untuk menyesuaikan dengan LoginController milikmu
             $userId = $_SESSION['user']['id'] ?? $_SESSION['user']['user_id'] ?? null;
             $eventId = $_POST['event_id'] ?? '';
 
-            // 3. Validasi tambahan: Jika $userId tetap kosong, arahkan untuk login ulang
             if (!$userId) {
                 $_SESSION['flash_error'] = "Sesi login tidak valid atau kadaluarsa. Silakan login ulang.";
                 header("Location: /login");
                 exit();
             }
 
-            // Pengecekan Keamanan Ganda: Cek apakah user sudah daftar di database
             $sudahDaftar = in_array($eventId, EventDashboardModel::getRegisteredEventIds($userId));
 
             if (!$sudahDaftar) {
-                // Jika belum, baru masukkan ke database
                 EventDashboardModel::daftarEvent($userId, $eventId);
-                $_SESSION['flash_sukses'] = "Berhasil mendaftar event!";
+                // UBAH NAMA SESSION MENJADI KHUSUS EVENT
+                $_SESSION['flash_event_sukses'] = "Berhasil mendaftar event!";
             } else {
-                $_SESSION['flash_error'] = "Anda sudah terdaftar di event ini.";
+                // UBAH NAMA SESSION MENJADI KHUSUS EVENT
+                $_SESSION['flash_event_error'] = "Anda sudah terdaftar di event ini.";
             }
 
-            header("Location: /riwayat");
+            // UBAH ARAH REDIRECT KEMBALI KE HALAMAN EVENT
+            header("Location: /dashboardevent");
             exit();
         } else {
-            // Jika yang mengakses bukan atlit atau bukan POST
             header("Location: /dashboardevent");
             exit();
         }

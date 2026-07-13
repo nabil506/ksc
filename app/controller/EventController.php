@@ -10,10 +10,12 @@ class EventController
     public function event()
     {
         $allevent = EventDashboardModel::getAllEvents();
-        View::render('homepage/event', 
-        [
-            'allevent' => $allevent,
-        ]
+        View::render(
+            'homepage/event',
+            [
+                'allevent' => $allevent,
+                'today'    => strtotime(date('Y-m-d')),
+            ]
         );
     }
 }

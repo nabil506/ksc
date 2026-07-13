@@ -110,9 +110,11 @@
                             <h3 style="margin-top: 5px;"><?= htmlspecialchars($event['nama_event']) ?></h3>
                             <p>📅 <?= date('d M Y', $eventDate) ?></p>
                             <p>📍 <?= htmlspecialchars($event['lokasi']) ?></p>
-                            <a href="/login" style="text-decoration: none;">
-                                <button style="cursor: pointer; width: 100%; margin-top: 10px;">Daftar / Detail</button>
-                            </a>
+                            <?php if ($isExpired): ?>
+                                <button class="register-event-btn" style="background: #e2e8f0; color: #a0aec0; cursor: not-allowed;" disabled>Pendaftaran Ditutup</button>
+                            <?php else: ?>
+                                <button class="register-event-btn" onclick="window.location.href='/login'">Daftar Event</button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php
@@ -141,7 +143,7 @@
 
     <section class="stats-section">
         <h2>Statistik Krian Swimming Club</h2>
-        
+
         <div class="stats-grid">
             <div class="stat-box">
                 <h3 class="counter"><?= htmlspecialchars($atlitAktif) ?></h3>
@@ -185,4 +187,5 @@
         </div>
     </footer>
 </body>
+
 </html>

@@ -16,7 +16,7 @@ class JadwalModel
                 SELECT j.*, u.nama_lengkap as nama_pelatih 
                 FROM jadwal j
                 JOIN users u ON j.id_pelatih = u.id
-                ORDER BY FIELD(j.hari,'Sabtu', 'Minggu'), j.waktu ASC
+                ORDER BY FIELD(j.hari,'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu', 'Minggu'), j.waktu ASC
             ";
             return $db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

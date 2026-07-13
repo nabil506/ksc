@@ -19,19 +19,28 @@
         <div class="event-grid">
 
             <?php if (!empty($allevent)): ?>
-                <?php foreach ($allevent as $event): ?>
+                <?php foreach ($allevent as $event):
+                    // Logika Pengecekan Tanggal Event
+                    $eventDate = strtotime($event['tanggal_event']);
+                    $isExpired = ($today > $eventDate);
+                ?>
                     <div class="event-item">
 
                         <img src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=1000" alt="<?= htmlspecialchars($event['nama_event']) ?>">
 
                         <div class="event-body">
                             <h3><?= htmlspecialchars($event['nama_event']) ?></h3>
-                            <p>📅 <?= date('d F Y', strtotime($event['tanggal_event'])) ?></p>
+                            <p>📅 <?= date('d F Y', $eventDate) ?></p>
                             <p>📍 <?= htmlspecialchars($event['lokasi']) ?></p>
 
                             <div id="countdown-<?= $event['id'] ?>"></div>
 
-                            <button class="register-event-btn" onclick="window.location.href='/login'">Daftar Event</button>
+                            <?php if ($isExpired): ?>
+                                <button class="register-event-btn" style="background: #e2e8f0; color: #a0aec0; cursor: not-allowed;" disabled>Pendaftaran Ditutup</button>
+                            <?php else: ?>
+                                <button class="register-event-btn" onclick="window.location.href='/login'">Daftar Event</button>
+                            <?php endif; ?>
+
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -45,47 +54,6 @@
 
         </div>
     </section>
-
-    <section class="calendar-event">
-        <h2>Kalender Kompetisi 2026</h2>
-        <table>
-            <tr>
-                <th>Bulan</th>
-                <th>Kegiatan</th>
-            </tr>
-            <tr>
-                <td>Juni</td>
-                <td>KSC National Cup</td>
-            </tr>
-            <tr>
-                <td>Juli</td>
-                <td>Liga Renang Jawa Timur</td>
-            </tr>
-            <tr>
-                <td>Agustus</td>
-                <td>Kejurkab Renang</td>
-            </tr>
-        </table>
-    </section>
-
-    <!-- <div id="eventModal" class="event-modal">
-        <div class="event-modal-content">
-            <span class="close-modal" onclick="closeEventForm()">×</span>
-            <h2>Pendaftaran Atlet</h2>
-            <form id="eventForm">
-                <input type="text" id="namaAtlet" placeholder="Nama Atlet" required>
-                <input type="number" id="umurAtlet" placeholder="Umur" required>
-                <input type="text" id="waAtlet" placeholder="Nomor WhatsApp" required>
-                <select id="kategori">
-                    <option>50m Gaya Bebas</option>
-                    <option>100m Gaya Bebas</option>
-                    <option>200m Gaya Dada</option>
-                    <option>4x100 Relay</option>
-                </select>
-                <button type="submit">Kirim Pendaftaran</button>
-            </form>
-        </div>j
-    </div> -->
 
     <footer class="footer">
         <div class="footer-container">
