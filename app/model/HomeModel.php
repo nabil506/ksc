@@ -46,7 +46,7 @@ class HomeModel
         try {
             $db = Database::getConnection();
             $query = "
-                SELECT u.nama_lengkap 
+                SELECT u.nama_lengkap, u.status_anggota, u.foto_profile
                 FROM users u
                 JOIN roles r ON u.id_role = r.id
                 WHERE r.role_name = 'pelatih' AND u.status_anggota = 'Aktif'

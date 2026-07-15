@@ -2542,8 +2542,8 @@ body.dashboard-page .profile-panel {
 }
 
 body.dashboard-page .profile-avatar-big {
-  width: 126px;
-  height: 126px;
+  width: 200px;
+  height: 200px;
   font-size: 38px;
 }
 
@@ -3402,4 +3402,55 @@ body.dashboard-page .athlete-countdown-mini small {
 /* Memaksa tombol untuk selalu berada di bagian paling bawah kartu */
 .event-body .register-event-btn {
   margin-top: auto !important;
+}
+/* =========================================
+   FOTO PROFIL UPLOAD (HOVER EFFECT)
+   ========================================= */
+body.dashboard-page .profile-avatar-container {
+  position: relative;
+  width: 200px;  /* Mengikuti ukuran asli avatar kamu */
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.07);
+  display: block; 
+}
+
+body.dashboard-page .profile-avatar-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.dashboard-page .avatar-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  padding: 12px 0;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Memunculkan tulisan saat mouse diarahkan (Hover) */
+body.dashboard-page .profile-avatar-container:hover .avatar-overlay {
+  opacity: 1;
+}
+
+/* Memastikan inisial nama memenuhi lingkaran jika belum ada foto */
+body.dashboard-page .profile-avatar-container .profile-avatar-big {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
 }

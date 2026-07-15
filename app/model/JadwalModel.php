@@ -44,18 +44,27 @@ class JadwalModel
     // 3. Menyimpan jadwal baru ke database
     public static function tambahJadwal($hari, $waktu, $id_pelatih, $kolam, $keterangan)
     {
-        $db = Database::getConnection();
-        $query = "INSERT INTO jadwal (hari, waktu, id_pelatih, kolam, keterangan) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $db->prepare($query);
-        return $stmt->execute([$hari, $waktu, $id_pelatih, $kolam, $keterangan]);
+        try {
+            $db = Database::getConnection();
+            $query = "INSERT INTO jadwal (hari, waktu, id_pelatih, kolam, keterangan) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $db->prepare($query);
+            return $stmt->execute([$hari, $waktu, $id_pelatih, $kolam, $keterangan]);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
     }
 
     // 4. Menghapus jadwal dari database berdasarkan ID
     public static function hapusJadwal($id)
     {
-        $db = Database::getConnection();
-        $query = "DELETE FROM jadwal WHERE id = ?";
-        $stmt = $db->prepare($query);
-        return $stmt->execute([$id]);
+        try{
+
+            $db = Database::getConnection();
+            $query = "DELETE FROM jadwal WHERE id = ?";
+            $stmt = $db->prepare($query);
+            return $stmt->execute([$id]);
+            }catch(PDOException $e){
+                return $e->getMessage();
+            }
     }
 }

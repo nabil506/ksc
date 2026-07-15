@@ -21,10 +21,14 @@
             <?php if (!empty($pelatihAktif)): ?>
                 <?php foreach ($pelatihAktif as $pelatih): ?>
                     <div class="coach-profile">
-                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($pelatih['nama_lengkap']) ?>&background=0A4D8C&color=fff&size=150&bold=true" alt="Coach <?= htmlspecialchars($pelatih['nama_lengkap']) ?>">
+
+                        <?php if (!empty($pelatih['foto_profile'])): ?>
+                            <img src="/app/images/profile/<?= htmlspecialchars($pelatih['foto_profile']) ?>" alt="Coach <?= htmlspecialchars($pelatih['nama_lengkap']) ?>">
+                        <?php else: ?>
+                            <img src="https://ui-avatars.com/api/?name=<?= urlencode($pelatih['nama_lengkap']) ?>&background=0A4D8C&color=fff&size=150&bold=true" alt="Coach <?= htmlspecialchars($pelatih['nama_lengkap']) ?>">
+                        <?php endif; ?>
 
                         <h3>Coach <?= htmlspecialchars($pelatih['nama_lengkap']) ?></h3>
-
                         <p>Pelatih KSC</p>
                         <span>🏅 Sertifikasi KSC</span>
                     </div>
@@ -45,7 +49,7 @@
                 <th>Hari</th>
                 <th>Jam</th>
             </tr>
-            
+
             <?php if (!empty($jadwalPelatih)): ?>
                 <?php foreach ($jadwalPelatih as $jadwal): ?>
                     <tr>
@@ -63,7 +67,7 @@
                     </td>
                 </tr>
             <?php endif; ?>
-            
+
         </table>
     </section>
 
@@ -86,7 +90,7 @@
                 <h3>Kontak</h3>
                 <p>📍 Krian, Sidoarjo</p>
                 <p>📞 0812-3456-7890</p>
-                <p>✉  krianswimmingclub@gmail.com</p>
+                <p>✉ krianswimmingclub@gmail.com</p>
             </div>
         </div>
         <div class="footer-bottom">

@@ -208,8 +208,29 @@
 
                 <div class="profile-panel">
 
-                    <div class="profile-avatar-big"><?= htmlspecialchars($initials) ?></div>
+                    <!-- FORM KHUSUS UPLOAD FOTO PROFIL -->
+                    <form action="/update-profile" method="POST" enctype="multipart/form-data" id="formAvatar">
+                        <label class="profile-avatar-container" title="Klik untuk ubah foto">
 
+                            <?php
+                            // Cek apakah user sudah punya foto profil di session
+                            $fotoProfile = $_SESSION['user']['foto_profile'] ?? null;
+                            ?>
+
+                            <?php if (!empty($fotoProfile)): ?>
+                                <!-- Jika ada foto, tampilkan fotonya -->
+                                <img src="/app/images/profile/<?= htmlspecialchars($fotoProfile) ?>" alt="Foto Profile"> <?php else: ?>
+                                <!-- Jika belum ada, tampilkan inisial nama -->
+                                <div class="profile-avatar-big"><?= htmlspecialchars($initials) ?></div>
+                            <?php endif; ?>
+
+                            <div class="avatar-overlay">📷 Upload Image</div>
+
+                            <!-- Input file disembunyikan. Saat gambar dipilih, form langsung dikirim (onchange) -->
+                            <input type="file" name="foto_profile" accept="image/png, image/jpeg, image/jpg" style="display: none;" onchange="document.getElementById('formAvatar').submit();">
+
+                        </label>
+                    </form>
                     <div class="profile-grid">
 
                         <div class="profile-item">

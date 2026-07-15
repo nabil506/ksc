@@ -37,6 +37,7 @@ class LoginController
                     'no_wa' => $user['no_wa'],
                     'status_anggota' => $user['status_anggota'] ?? 'Nonaktif',
                     'role_name' => $user['role_name'],
+                    'foto_profile' => $user['foto_profile'] ?? null,
                 ];
 
                 header("Location: /dashboard");

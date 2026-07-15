@@ -45,8 +45,6 @@
         }
 
         .badge-status {
-            background: #d1fae5;
-            color: #065f46;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -68,10 +66,10 @@
 
                     <?php if (strtolower($user['role_name']) !== 'admin'): ?>
                         <?php
-                        $badgeBg = (strtolower($user['status_anggota']) === 'aktif') ? '#d1fae5' : '#fee2e2';
-                        $badgeColor = (strtolower($user['status_anggota']) === 'aktif') ? '#065f46' : '#991b1b';
+                        $badgeUserBg = (strtolower($user['status_anggota']) === 'aktif') ? '#d1fae5' : '#fee2e2';
+                        $badgeUserColor = (strtolower($user['status_anggota']) === 'aktif') ? '#065f46' : '#991b1b';
                         ?>
-                        <span style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
+                        <span style="background-color: <?= $badgeUserBg ?>; color: <?= $badgeUserColor ?>; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600;">
                             <?= htmlspecialchars(strtoupper($user['status_anggota'])) ?>
                         </span>
                     <?php endif; ?>
@@ -118,7 +116,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($data['riwayat'])): ?>
+                            <?php if (empty($riwayat)): ?>
                                 <tr>
                                     <td colspan="5" style="text-align:center; padding: 30px; color: #718096;">
                                         <?php if (strtolower($user['role_name']) === 'admin'): ?>
@@ -130,10 +128,19 @@
                                     </td>
                                 </tr>
                             <?php else: ?>
-                                <?php foreach ($data['riwayat'] as $index => $row): ?>
+                                <?php foreach ($riwayat as $index => $row): ?>
+
+                                    <?php
+                                    $eventDate = strtotime($row['tanggal_event']);
+                                    $isExpired = ($today > $eventDate);
+
+                                    $statusBadge = $isExpired ? 'SELESAI' : 'UPCOMING';
+                                    $badgeBg = $isExpired ? '#e2e8f0' : '#d1fae5';
+                                    $badgeColor = $isExpired ? '#4a5568' : '#065f46';
+                                    ?>
+
                                     <tr>
                                         <td><?= $index + 1 ?></td>
-
                                         <td style="font-weight: 500; text-transform: capitalize;">
                                             <?= htmlspecialchars($row['nama_atlet']) ?>
                                         </td>
@@ -141,8 +148,8 @@
                                         <td><?= htmlspecialchars($row['nama_event']) ?></td>
                                         <td><?= date('d M Y, H:i', strtotime($row['tanggal_daftar'])) ?></td>
                                         <td>
-                                            <span class="badge-status">
-                                                <?= htmlspecialchars($row['status_event'] ?? 'Terdaftar') ?>
+                                            <span class="badge-status" style="background-color: <?= $badgeBg ?>; color: <?= $badgeColor ?>;">
+                                                <?= $statusBadge ?>
                                             </span>
                                         </td>
                                     </tr>

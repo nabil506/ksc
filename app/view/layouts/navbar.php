@@ -3,7 +3,7 @@
         <nav class="navbar">
 
             <div class="logo">
-                <img src="/app/images/logo renang 2.jpg" alt="KSC Logo">
+                <img src="/app/images/profilerenang/logo renang 2.jpg" alt="KSC Logo">
             </div>
 
             <ul class="nav-links">

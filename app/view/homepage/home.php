@@ -65,24 +65,30 @@
         </div>
     </section>
 
-    <section class="coach">
-        <h2>Tim Pelatih</h2>
-        <div class="coach-container">
-            <?php if (!empty($pelatihList)): ?>
-                <?php foreach ($pelatihList as $p): ?>
-                    <div class="coach-card">
-                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($p['nama_lengkap']) ?>&background=0A4D8C&color=fff&size=150&bold=true" alt="Foto <?= htmlspecialchars($p['nama_lengkap']) ?>">
-                        <h3><?= htmlspecialchars($p['nama_lengkap']) ?></h3>
-                        <p>Pelatih KSC</p>
+        <section class="coach">
+            <h2>Tim Pelatih</h2>
+            <div class="coach-container">
+                <?php if (!empty($pelatihList)): ?>
+                    <?php foreach ($pelatihList as $p): ?>
+                        <div class="coach-card">
+
+                            <?php if (!empty($p['foto_profile'])): ?>
+                                <img src="/app/images/profile/<?= htmlspecialchars($p['foto_profile']) ?>" alt="Foto <?= htmlspecialchars($p['nama_lengkap']) ?>">
+                            <?php else: ?>
+                                <img src="https://ui-avatars.com/api/?name=<?= urlencode($p['nama_lengkap']) ?>&background=0A4D8C&color=fff&size=150&bold=true" alt="Foto <?= htmlspecialchars($p['nama_lengkap']) ?>">
+                            <?php endif; ?>
+
+                            <h3><?= htmlspecialchars($p['nama_lengkap']) ?></h3>
+                            <p>Pelatih KSC</p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div style="width: 100%; text-align: center; color: #718096; padding: 20px;">
+                        <p>Belum ada pelatih yang terdaftar.</p>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div style="width: 100%; text-align: center; color: #718096; padding: 20px;">
-                    <p>Belum ada pelatih yang terdaftar.</p>
-                </div>
-            <?php endif; ?>
-        </div>
-    </section>
+                <?php endif; ?>
+            </div>
+        </section>
 
     <section class="event-section">
         <div class="section-title">

@@ -10,8 +10,8 @@ class RiwayatController
 {
     public function riwayat()
     {
-        Proteksi::proteksilogin();        
-        
+        Proteksi::proteksilogin();
+
         $user = $_SESSION['user'];
 
         // 2. Cek role untuk menentukan data mana yang diambil
@@ -22,16 +22,14 @@ class RiwayatController
             // Atlit (dan Pelatih) hanya melihat pendaftarannya sendiri
             $riwayat = RiwayatModel::getRiwayatByUserId($user['user_id']);
         }
-        
-        $data = [
-            'riwayat'        => $riwayat 
-        ];
 
-        View::render('dashboard/riwayat', 
-        [
-            'data' => $data,
-            'user' => $user,
-        ]
-            );
+        View::render(
+            'dashboard/riwayat',
+            [
+                'riwayat' => $riwayat,
+                'today' => strtotime(date('Y-m-d')),
+                'user' => $user,
+            ]
+        );
     }
 }

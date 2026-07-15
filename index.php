@@ -16,6 +16,7 @@ use app\controller\ProfilController;
 use app\controller\RiwayatController;
 use app\controller\JadwalController;
 use app\controller\PelatihController;
+use app\controller\ProfileController;
 
 // --- RUTE WEB PUBLIK ---
 Route::get('/', HomeController::class, 'index');
@@ -35,8 +36,8 @@ Route::get('/logout', LoginController::class, 'logout');
 
 // --- RUTE DASHBOARD UMUM (Atlit & Pelatih & Admin) ---
 Route::get('/dashboard', DashboardController::class, 'dashboard');
-Route::get('/profil', ProfilController::class, 'profil');
-Route::post('/update-profile', BiodataController::class, 'prosesedit');
+Route::get('/profil', ProfileController::class, 'profil');
+Route::post('/update-profile', ProfileController::class, 'prosesedit');
 Route::get('/jadwal', JadwalController::class, 'jadwal');
 Route::post('/tambah-jadwal', JadwalController::class, 'tambah');
 Route::post('/hapus-jadwal', JadwalController::class, 'hapus');
