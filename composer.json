@@ -10,5 +10,13 @@
             "name": "Nabil Syah Ahnaf Bayhaqi",
             "email": "balaikota789@gmail.com"
         }
-    ]
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "platform": {
+        "php": "8.3.27"
+    }
 }

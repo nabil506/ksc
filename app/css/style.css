@@ -802,10 +802,12 @@ footer {
 
   color: white;
 }
+
 .coach-schedule h2 {
   text-align: center;
   margin-bottom: 20px;
 }
+
 .coach-schedule th,
 .coach-schedule td {
   padding: 15px;
@@ -2172,9 +2174,9 @@ body.dark-mode .chart-container {
   .footer-contact {
     width: 100% !important;
   }
+
   /* Tables overflow */
-  .coach-schedule
-  .calendar-event,
+  .coach-schedule .calendar-event,
   table {
     overflow-x: auto !important;
     display: block !important;
@@ -3403,19 +3405,20 @@ body.dashboard-page .athlete-countdown-mini small {
 .event-body .register-event-btn {
   margin-top: auto !important;
 }
+
 /* =========================================
    FOTO PROFIL UPLOAD (HOVER EFFECT)
    ========================================= */
 body.dashboard-page .profile-avatar-container {
   position: relative;
-  width: 200px;  /* Mengikuti ukuran asli avatar kamu */
-  height: 200px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
   margin: 0;
   box-shadow: 0 14px 36px rgba(15, 23, 42, 0.07);
-  display: block; 
+  display: block;
 }
 
 body.dashboard-page .profile-avatar-container img {
@@ -3452,5 +3455,6 @@ body.dashboard-page .profile-avatar-container .profile-avatar-big {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 60px;
+  font-size: 50px;
+  /* Sesuaikan font-size agar tidak terlalu besar di dalam lingkaran 120px */
 }
