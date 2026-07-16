@@ -4,7 +4,6 @@ namespace app\controller;
 
 use app\model\ResetPasswordModel;
 use app\config\View;
-// Import class PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
