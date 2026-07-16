@@ -18,5 +18,8 @@
     },
     "platform": {
         "php": "8.3.27"
+    },
+    "require": {
+        "phpmailer/phpmailer": "^7.1"
     }
 }

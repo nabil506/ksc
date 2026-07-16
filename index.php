@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 require_once 'vendor/autoload.php';
 
 use app\controller\AboutController;
@@ -17,6 +18,7 @@ use app\controller\RiwayatController;
 use app\controller\JadwalController;
 use app\controller\PelatihController;
 use app\controller\ProfileController;
+use app\controller\ResetPasswordController;
 
 // --- RUTE WEB PUBLIK ---
 Route::get('/', HomeController::class, 'index');
@@ -56,4 +58,13 @@ Route::post('/proses-daftar-event', EventDashboardController::class, 'prosesDaft
 Route::post('/proses-edit-event', EventDashboardController::class, 'editEvent');
 Route::post('/proses-hapus-event', EventDashboardController::class, 'hapusEvent');
 
+// --- RUTE LUPA PASSWORD (OTP) ---
+Route::get('/lupa-password', ResetPasswordController::class, 'OTP');
+Route::post('/proses-lupa-password', ResetPasswordController::class, 'sendOtp');
+
+Route::get('/verifikasi-otp', ResetPasswordController::class, 'verifyOtpPage');
+Route::post('/proses-verifikasi-otp', ResetPasswordController::class, 'processOtp');
+
+Route::get('/reset-password', ResetPasswordController::class, 'resetPasswordPage');
+Route::post('/proses-reset-password', ResetPasswordController::class, 'processResetPassword');
 Route::run();
