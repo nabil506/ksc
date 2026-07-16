@@ -30,7 +30,7 @@ class RiwayatModel
 
             $stmt = $db->prepare($query);
             $stmt->execute([$user_id]);
-            return $stmt->fetchAll;
+            return $stmt->fetchAll();
         } catch (PDOException $e) {
             return $e->getMessage();
         }
