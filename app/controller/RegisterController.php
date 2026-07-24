@@ -2,6 +2,7 @@
 namespace app\controller; 
 
 use app\model\RegisterModel;
+use app\config\HashPassword;
 
 class RegisterController
 {
@@ -37,7 +38,7 @@ class RegisterController
                 exit();
             }
 
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $hashedPassword = HashPassword::hashpassword($password);
             
             // Lakukan 1 kali INSERT saja
             $userId = RegisterModel::insert($nama_lengkap, $email, $umur, $no_wa, $hashedPassword, $id_role_atlit);

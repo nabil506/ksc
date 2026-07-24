@@ -2,8 +2,7 @@
 namespace app\config;
 
 class HashPassword{
-
-    public static function passwordhash($password){
-        password_hash($password, PASSWORD_BCRYPT);
+    public static function hashpassword($password){
+       return  password_hash($password, PASSWORD_BCRYPT);
     }
 }

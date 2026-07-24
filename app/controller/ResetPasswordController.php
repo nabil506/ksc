@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\config\HashPassword;
 use app\model\ResetPasswordModel;
 use app\config\View;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -158,7 +159,7 @@ class ResetPasswordController
                 exit();
             }
 
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $hashed_password = HashPassword::hashpassword($password);
 
             if (ResetPasswordModel::updatePassword($email, $hashed_password)) {
                 unset($_SESSION['reset_email']);
